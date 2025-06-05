@@ -1,23 +1,20 @@
 import os
 import io
-import zipfile
 import time
-import shutil
 from datetime import datetime
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-from google.oauth2 import service_account
 
 #Revisamos que tengamos todas las librerias instaladas y si no las instalamos
-# try:
-#     from googleapiclient.discovery import build
-#     from googleapiclient.http import MediaIoBaseDownload
-#     from google.oauth2 import service_account
-# except ImportError:
-#     os.system('pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib')
-#     from googleapiclient.discovery import build
-#     from googleapiclient.http import MediaIoBaseDownload
-#     from google.oauth2 import service_account
+try:
+    import zipfile
+    import shutil
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaIoBaseDownload
+    from google.oauth2 import service_account
+except ImportError:
+    os.system('pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib zipfile36 pytest-shutil')
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaIoBaseDownload
+    from google.oauth2 import service_account
 
 #Limpiamos la consola
 # os.system('cls' if os.name == 'nt' else 'clear')
