@@ -10,23 +10,20 @@ try:
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaIoBaseDownload
     from google.oauth2 import service_account
+    from tqdm import tqdm
 except ImportError:
-    os.system('pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib zipfile36 pytest-shutil')
+    os.system('pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib zipfile36 pytest-shutil tqdm==2.2.3')
+    import zipfile
+    import shutil
+    from tqdm import tqdm
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaIoBaseDownload
     from google.oauth2 import service_account
 
 #Limpiamos la consola
-# os.system('cls' if os.name == 'nt' else 'clear')
-
-#Limpiamos la carpeta de respaldos
-
-# === CONFIGURA AQUÍ ===
-# SERVICE_ACCOUNT_FILE = r'C:\\Users\\elvis\\Documents\\proyectos\\python\\inah\\descargasdrive-459119-e7b80262a15b.json'
-# FOLDER_IDS = ['1vMji_tgbxAraz-8IGtf84teV1TKrNsxB']
-# OUTPUT_DIR = r'C:\\Users\\elvis\\Documents\\proyectos\\python\\inah\\BACKUPs_Descargas'
-# ZIP_OUTPUT = r'C:\\Users\\elvis\\Documents\\proyectos\\python\\inah\\BACKUPs_Zips'
-# ======================
+os.system('cls' if os.name == 'nt' else 'clear')
+for i in tqdm(range(100)):
+    time.sleep(0.1)
 
 
 def ensure_dir(path):
@@ -110,7 +107,7 @@ def process_folder(folder_id, folder_path, drive_service, processed_folders, fil
     ensure_dir(folder_path)
     files = get_files_in_folder(folder_id, drive_service)
 
-    for file in files:
+    for file in tqdm(files, desc="Descargando archivos"):  
         file_id = file['id']
         file_name = file['name']
         mime_type = file['mimeType']
@@ -197,7 +194,7 @@ def main():
 
     zip_name = f"descarga_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
     zip_path = os.path.join(ZIP_OUTPUT, zip_name)
-    print("🎁 Creando ZIP...")
+    print("📦 Creando ZIP...")
     zip_directory(OUTPUT_DIR, zip_path)
     print(f"📦 ZIP creado: {zip_path}")
 
